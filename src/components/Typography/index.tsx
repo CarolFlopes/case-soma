@@ -1,17 +1,39 @@
-import React from "react";
-import * as S from "./styles";
+import { HTMLAttributes, ReactNode } from 'react';
+import * as S from './styles';
+import GlobalStyle from '../../styles/fonts';
 
-const Typography = ({ children, fontSize, fontWeight, color, textAlign, margin }) => {
+export interface ITypography extends HTMLAttributes<HTMLParagraphElement> {
+  fontWeight?: string;
+  color?: string;
+  children: string | ReactNode;
+  size?: number | string;
+  textOverflow?: string;
+  cursor?: boolean
+}
+
+const Typography: React.FC<ITypography> = ({
+  fontWeight = '400',
+  color = '#000000',
+  children,
+  textOverflow,
+  size = '12px',
+  cursor = false,
+  ...rest
+}) => {
   return (
-    <S.Typography 
-      fontSize={fontSize} 
-      fontWeight={fontWeight} 
-      color={color} 
-      textAlign={textAlign} 
-      margin={margin}
+  <> 
+    <GlobalStyle/>
+    <S.P
+      textOverflow={textOverflow}
+      fontWeight={fontWeight}
+      cursor={String(cursor)}
+      color={color}
+      size={size}
+      {...rest}
     >
       {children}
-    </S.Typography>
+    </S.P> 
+  </>    
   );
 };
 

@@ -1,10 +1,19 @@
-import styled from "styled-components";
+import { HTMLProps } from 'react';
+import styled from 'styled-components';
 
-export const Typography = styled.p`
-  font-family: 'Futural', sans-serif;
-  font-size: ${(props) => props.fontSize || "12px"};
-  font-weight: ${(props) => props.fontWeight || "400"};
-  color: ${(props) => props.color || "inherit"};
-  text-align: ${(props) => props.textAlign || "left"};
-  margin: ${(props) => props.margin || "0"};
+interface Props extends HTMLProps<HTMLParagraphElement> {
+  size?: any;
+  fontWeight?: string;
+  color?: string;
+  textOverflow?: string;
+  cursor?: string;
+}
+
+export const P = styled.p<Props>`
+  font-size: ${(props) => props.size};
+  line-height: ${(props) => props.size};
+  font-weight: ${(props) => props.fontWeight};
+  color: ${(props) => props.color};
+  text-overflow: ${(props) => props.textOverflow};
+  cursor: ${(props) => (props.cursor === 'true' ? 'pointer' : 'inherit')};
 `;
