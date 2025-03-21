@@ -1,27 +1,75 @@
 import styled from "styled-components";
 
+interface PropsIcon {
+  isLeft?: boolean;
+}
+
 export const Content = styled.div`
+  display: flex;
   width: 100%;
   height: 140px;
-  display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid red;
+  margin: 0px;
 `;
 
 export const BrandContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid green;
   width: 124px;
   height: 34px;
-  border: 1px solid blue;
   margin-top: 35px;
 `;
 
-export const Menu = styled.div`
+export const MenuContainer = styled.div`
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;  
+`;
+
+export const MenuItemsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+    
+    p {
+      font-weight: bold;      
+    }
+
+    border-bottom: 1px solid black;
+  }
+`;
+
+export const IconsContainer = styled.div<PropsIcon>`
+  display: flex;
+  align-items: center;
+   position: absolute;  
+  ${({ isLeft }) => (isLeft ? "left: 25px;" : "right: 40px;")}
+  margin-top:16px;
+   &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const ContentBg = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width:100%;  
+  height: 100vh;
+  background-image: url("/images/plano-de-fundo.png"); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
 `;
+
+

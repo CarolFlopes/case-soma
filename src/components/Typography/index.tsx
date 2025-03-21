@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import * as S from './styles';
-import GlobalStyle from '../../styles/fonts';
+import GlobalStyle from '../../styles/globalComponents';
 
 export interface ITypography extends HTMLAttributes<HTMLParagraphElement> {
   fontWeight?: string;
