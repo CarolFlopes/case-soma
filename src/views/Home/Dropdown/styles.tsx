@@ -1,4 +1,3 @@
-// styles.tsx
 import styled from "styled-components";
 import { colors } from "../../../styles/designSystem";
 
@@ -35,15 +34,15 @@ export const ColumnsContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 40px;
-  justify-content: flex-start; // Alinha as colunas à esquerda
-  width: 100%; // Garante que o container ocupe toda a largura disponível
+  justify-content: flex-start; 
+  width: 100%; 
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  align-items: flex-start; // Alinha os itens à esquerda
+  align-items: flex-start; 
 `;
 
 export const Item = styled.div`
