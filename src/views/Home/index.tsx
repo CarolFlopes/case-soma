@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import Dropdown from "./Dropdown";
+import Dropdown from "../../components/Dropdown";
 import useDropdown from "../../hooks/useDropdown";
 import Menu from "../../components/Menu";
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../../styles/designSystem";
+import { colors } from "../../styles/designSystem";
 
 export const DropdownMenu = styled.div`
   position: absolute;
