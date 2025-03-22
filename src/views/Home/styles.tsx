@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../../styles/designSystem";
 
 interface PropsIcon {
   isLeft?: boolean;
@@ -28,7 +29,7 @@ export const MenuContainer = styled.div`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  gap: 40px;  
+  gap: 40px;
 `;
 
 export const MenuItemsContainer = styled.div`
@@ -37,12 +38,13 @@ export const MenuItemsContainer = styled.div`
   justify-content: center;
   height: 50px;
   position: relative;
+  padding: 10px;
 
   &:hover {
     cursor: pointer;
     
     p {
-      font-weight: bold;      
+      font-weight: bold;
     }
 
     border-bottom: 1px solid black;
@@ -52,10 +54,10 @@ export const MenuItemsContainer = styled.div`
 export const IconsContainer = styled.div<PropsIcon>`
   display: flex;
   align-items: center;
-   position: absolute;  
+  position: absolute;
   ${({ isLeft }) => (isLeft ? "left: 25px;" : "right: 40px;")}
-  margin-top:16px;
-   &:hover {
+  margin-top: 16px;
+  &:hover {
     cursor: pointer;
   }
 `;
@@ -64,12 +66,11 @@ export const ContentBg = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:100%;  
-  height: 100vh;
-  background-image: url("/images/plano-de-fundo.png"); 
-  background-size: cover; 
-  background-position: center; 
+  width: 100%;
+  height: 50vh;
+  background-image: url("/images/plano-de-fundo.png");
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
 `;
-
 
