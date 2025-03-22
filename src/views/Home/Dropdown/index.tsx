@@ -1,7 +1,6 @@
 import { forwardRef } from "react";
 import * as S from './styles';
-import Typography from "../../../components/Typography";
-import { colors } from "../../../styles/designSystem";
+import CategorySection from "./cateorySection";
 
 interface DropdownProps {
   isOpen: boolean;
@@ -9,8 +8,21 @@ interface DropdownProps {
   activeProduct: string | null;
 }
 
-const produtos1 = ['VESTIDO', 'TOP/BLUSA', 'CALÇA', 'CAMISA', 'JAQUETA', 'MACACÃO'];
-const produtos2 = ['SAIA', 'SHORT', 'BLAZER', 'COLETE', 'VER TUDO >'];
+const categories = {
+  categorias: {
+    produtos1: ['VESTIDO', 'TOP/BLUSA', 'CALÇA', 'CAMISA', 'JAQUETA', 'MACACÃO'],
+    produtos2: ['SAIA', 'SHORT', 'BLAZER', 'COLETE', 'VER TUDO >'],
+    tecidos1: ['COURO', 'SEDA', 'TRICOT', 'CLUB/NOITE', 'JEANS', 'MALHA'],
+    tecidos2: ['ALFAIATARIA', 'VER TUDO >'],
+  },
+  acessorios: {
+    acessorios1: ['BOLSAS', 'CALÇADOS', 'CINTO', 'COLAR', 'ANEL', 'BRINCO'],
+    acessorios2: ['PILSEIRA/BRACELETE', 'ECHARPE/LENÇO', 'VER TUDO >'],
+  },
+  intimates: {
+    intimates: ['LINGERIE', 'UNDERWEAR', 'VER TUDO >'],
+  },
+};
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   ({ isOpen, onClose, activeProduct }, ref) => {
@@ -18,29 +30,9 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
 
     return (
       <S.DropdownMenu ref={ref}>
-        <S.CategoryContainer><S.Title>
-          <Typography size={"15px"} fontWeight={"700"} color={colors.black[300]} onClick={onClose}>
-            CATEGORIAS
-          </Typography>
-        </S.Title><S.ColumnsContainer>
-        
-          <S.Content>
-            {produtos1.map((produto, index) => (
-              <Typography key={index} size={"13px"} color={colors.black[300]} onClick={onClose}>
-                {produto}
-              </Typography>
-            ))}
-          </S.Content>
-          <S.Content>
-            {produtos2.map((produto, index) => (
-              <Typography key={index} size={"13px"} color={colors.black[300]} onClick={onClose}>
-                {produto}
-              </Typography>
-            ))}
-          </S.Content></S.ColumnsContainer>
-          </S.CategoryContainer>
-        
-        
+        <CategorySection title="CATEGORIAS" data={categories.categorias} onClose={onClose} hasDivider/>
+        <CategorySection title="ACESSÓRIOS" data={categories.acessorios} onClose={onClose}  />
+        <CategorySection title="INTIMATES" data={categories.intimates} onClose={onClose} />
       </S.DropdownMenu>
     );
   }

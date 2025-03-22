@@ -1,3 +1,4 @@
+// styles.tsx
 import styled from "styled-components";
 import { colors } from "../../../styles/designSystem";
 
@@ -6,23 +7,26 @@ export const DropdownMenu = styled.div`
   top: 140px;
   z-index: 10;
   background-color: ${colors.white[200]};
-  padding: 20px;
   width: 100%;
   height: 302px;
   display: flex;
-  align-items: center;
-`;
-
-export const CategoryContainer = styled.div`
-  width: 461px;
-  height: 206px;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
 
+export const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 100px;
+  height: 206px;
+  align-items: flex-start; 
+`;
+
 export const Title = styled.div`
   display: flex;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   width: 100%;
   margin-bottom: 20px;
 `;
@@ -30,12 +34,23 @@ export const Title = styled.div`
 export const ColumnsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 40px; 
-  width: 100%; 
+  gap: 40px;
+  justify-content: flex-start; // Alinha as colunas à esquerda
+  width: 100%; // Garante que o container ocupe toda a largura disponível
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px; 
+  gap: 15px;
+  align-items: flex-start; // Alinha os itens à esquerda
+`;
+
+export const Item = styled.div`
+  &:hover {
+    cursor: pointer;
+    p {
+      font-weight: bold;
+    }
+  }
 `;
