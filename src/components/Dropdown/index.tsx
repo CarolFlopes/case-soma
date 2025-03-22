@@ -1,13 +1,6 @@
-import { forwardRef, useState } from "react";
+import { forwardRef } from "react";
 import * as S from './styles';
 import CategorySection from "./cateorySection";
-import Couro from "./Subitems/Couro";
-
-
-
-const subItemComponents: { [key: string]: React.ComponentType } = {
-  COURO: Couro,
-};
 
 interface DropdownProps {
   isOpen: boolean;
@@ -33,57 +26,13 @@ const categories = {
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   ({ isOpen, onClose, activeProduct }, ref) => {
-    const [activeSubItem, setActiveSubItem] = useState<string | null>(null);
-
     if (!isOpen || !activeProduct) return null;
-
-    const handleSubItemClick = (subItem: string) => {
-      setActiveSubItem(subItem);
-    };
-
-    const renderContent = () => {
-      if (activeSubItem) {
-        const SubItemComponent = subItemComponents[activeSubItem];
-        return (
-          <>
-            {SubItemComponent ? (
-              <SubItemComponent />
-            ) : (
-              <div>Conteúdo não encontrado para {activeSubItem}.</div>
-            )}
-            <button onClick={() => setActiveSubItem(null)}>Voltar</button>
-          </>
-        );
-      }
-
-      return (
-        <>
-          <CategorySection
-            title="CATEGORIAS"
-            data={categories.categorias}
-            onClose={onClose}
-            hasDivider
-            onSubItemClick={handleSubItemClick}
-          />
-          <CategorySection
-            title="ACESSÓRIOS"
-            data={categories.acessorios}
-            onClose={onClose}
-            onSubItemClick={handleSubItemClick}
-          />
-          <CategorySection
-            title="INTIMATES"
-            data={categories.intimates}
-            onClose={onClose}
-            onSubItemClick={handleSubItemClick}
-          />
-        </>
-      );
-    };
 
     return (
       <S.DropdownMenu ref={ref}>
-        {renderContent()}
+        <CategorySection title="CATEGORIAS" data={categories.categorias} onClose={onClose} hasDivider/>
+        <CategorySection title="ACESSÓRIOS" data={categories.acessorios} onClose={onClose}  />
+        <CategorySection title="INTIMATES" data={categories.intimates} onClose={onClose} />
       </S.DropdownMenu>
     );
   }
