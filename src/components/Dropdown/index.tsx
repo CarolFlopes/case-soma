@@ -8,7 +8,7 @@ interface DropdownProps {
   activeProduct: string | null;
 }
 
-const categories = {
+export const categories = {
   categorias: {
     produtos1: ['VESTIDO', 'TOP/BLUSA', 'CALÇA', 'CAMISA', 'JAQUETA', 'MACACÃO'],
     produtos2: ['SAIA', 'SHORT', 'BLAZER', 'COLETE', 'VER TUDO >'],

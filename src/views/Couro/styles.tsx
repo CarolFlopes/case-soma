@@ -1,75 +1,66 @@
 import styled from "styled-components";
 
-interface PropsIcon {
-  isLeft?: boolean;
-}
-
-export const Content = styled.div`
-  display: flex;
+export const ImgContainer = styled.div`
   width: 100%;
-  height: 140px;
-  flex-direction: column;
-  align-items: center;
-  margin: 0px;
-`;
-
-export const BrandContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 124px;
-  height: 34px;
-  margin-top: 35px;
-`;
-
-export const MenuContainer = styled.div`
-  display: flex;
-  margin-top: 20px;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 40px;
-`;
-
-export const MenuItemsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  position: relative;
-  padding: 10px;
-
-  &:hover {
-    cursor: pointer;
-    
-    p {
-      font-weight: bold;
-    }
-
-    border-bottom: 1px solid black;
+  height: 525px;
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
-export const IconsContainer = styled.div<PropsIcon>`
-  display: flex;
-  align-items: center;
-  position: absolute;
-  ${({ isLeft }) => (isLeft ? "left: 25px;" : "right: 40px;")}
-  margin-top: 16px;
+export const ProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+export const ProductCard = styled.div`
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 16px;
+  transition: transform 0.2s ease-in-out;
+
   &:hover {
-    cursor: pointer;
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 10px 0;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff5733;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 `;
-
-export const ContentBg = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 50vh;
-  background-image: url("/images/plano-de-fundo.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-`;
-

@@ -1,10 +1,11 @@
-import * as S from "./styles";
+
 import Dropdown from "../../components/Dropdown";
 import useDropdown from "../../hooks/useDropdown";
-import Menu from "../../components/Menu";
+import * as S from "./styles";
+import Menu from "../Menu";
 import { useNavigate } from "react-router-dom";
 
-const HomePage = () => {
+const Header = () => {
 
   const navigate = useNavigate();
   const products = ["NOVIDADES", "COLEÇÃO", "JOIAS", "SALE"];
@@ -39,13 +40,12 @@ const HomePage = () => {
       <Dropdown
         ref={dropdownRef}
         isOpen={dropdownOpen}
-        onClose={() => setDropdownOpen(false)} 
+        onClose={() => setDropdownOpen(false)}
         activeProduct={activeProduct}
       />
 
-      <S.ContentBg />
     </>
   );
 };
 
-export default HomePage;
+export default Header;

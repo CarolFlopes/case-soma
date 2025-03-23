@@ -1,45 +1,81 @@
-import Dropdown from '../../components/Dropdown';
-import Menu from '../../components/Menu';
-import useDropdown from '../../hooks/useDropdown';
-import * as S from './styles'
+import { useEffect, useState } from "react";
+import Header from "../../components/Header";
+import * as S from "./styles";
+import productsData from "../../data/products.json";
+
+interface Product {
+  productId: string;
+  productName: string;
+  link: string;
+  categories: string[];
+  items: {
+    images: {
+      imageUrl: string;
+    }[];
+    sellers: {
+      commertialOffer: {
+        Price: number;
+      };
+    }[];
+  }[];
+}
 
 const CouroPage = () => {
-  const products = ["NOVIDADES", "COLEÇÃO", "JOIAS", "SALE"];
-  const {
-    dropdownOpen,
-    activeProduct,
-    dropdownRef,
-    menuItemRef,
-    toggleDropdown,
-    handleMouseEnter,
-    handleMouseLeave,
-    setDropdownOpen,
-  } = useDropdown();
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const filteredProducts = (productsData as Product[]).filter((product) =>
+      product.categories.some((category) =>
+        category.toUpperCase().includes("CAMISA")
+      )
+    );
+    setProducts(filteredProducts);
+  }, []);
+
+  const renderProducts = () => {
+    if (products.length === 0) {
+      return <p>Não há produtos disponíveis.</p>;
+    }
+
+    return products.map((product) => {
+      const { productId, productName, link, items } = product;
+      const imageUrl = items[0]?.images[0]?.imageUrl;
+      const price = items[0]?.sellers[0]?.commertialOffer?.Price;
+
+      return (
+        <S.ProductCard key={productId}>
+          {imageUrl ? (
+            <img src={imageUrl} alt={productName} />
+          ) : (
+            <p>Imagem não disponível</p>
+          )}
+          <h2>{productName}</h2>
+          {price ? (
+            <p>{`R$ ${price.toFixed(2)}`}</p>
+          ) : (
+            <p>Preço indisponível</p>
+          )}
+          <a href={link} aria-label={`Ver detalhes de ${productName}`}>
+            Ver detalhes
+          </a>
+        </S.ProductCard>
+      );
+    });
+  };
 
   return (
     <>
-      <S.Content>
-        <S.BrandContainer>
-          <img src="/images/logo.svg" alt="Logo" width={124} height={"auto"} />
-        </S.BrandContainer>
-        <div>
-          <Menu
-            products={products}
-            menuItemRef={menuItemRef}
-            toggleDropdown={toggleDropdown}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-          />
-        </div>
-      </S.Content>
+      <Header />
+      <S.ImgContainer>
+        <img
+          src="/images/couro.png"
+          alt="Couro"
+          width="100%"
+          height="525px"
+        />
+      </S.ImgContainer>
 
-      <Dropdown
-        ref={dropdownRef}
-        isOpen={dropdownOpen}
-        onClose={() => setDropdownOpen(false)} 
-        activeProduct={activeProduct}
-      />
-
+      <S.ProductGrid>{renderProducts()}</S.ProductGrid>
     </>
   );
 };
