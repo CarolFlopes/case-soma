@@ -1,16 +1,15 @@
-import Header from "../../components/Header";
-import ProductList from "../../components/ProductList";
+import CategoryPage from '../../components/CategoryPages';
+import Header from '../../components/Header';
 
-const CouroPage = () => { 
+const CouroPage = () => {
   return (
-    <>
-      <Header />   
-      <img src="/images/couro.png" alt="Couro" width="100%" height="525px" />
-      <ProductList
+    <CategoryPage
       category="COURO"
-      cluster="couro" 
+      cluster="couro"
+      image="/images/couro.png"
+      title="COURO"
+      description="As peças de couro da ANIMALE são irreverentes e se destacam nas produções. Os shapes assimétricos, detalhes metálicos e as tonalidades mais escuras e vibrantes imprimem sofisticação na hora de compor um look. Renove seu closet para as próximas estações com as roupas de couro femininas da nossa coleção."
     />
-    </>
   );
 };
 
