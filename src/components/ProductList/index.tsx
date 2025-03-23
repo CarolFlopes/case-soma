@@ -29,6 +29,7 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
   if (error) return <div>Erro: {error}</div>;
 
   return (
+    <>
     <S.Container>
       <S.Options>
         <span>Exibir:</span>
@@ -62,6 +63,9 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
         </S.LoadMoreButton>
       )}
     </S.Container>
+    
+    </>
+    
   );
 };
 

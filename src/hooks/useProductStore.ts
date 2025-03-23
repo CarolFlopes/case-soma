@@ -91,9 +91,11 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
     // Log dos produtos antes de filtrar
     console.log('Produtos antes de filtrar:', products);
   
-    // Filtro pela categoria
+    // Filtro pela categoria (verifica se a categoria contém "TOP" ou "BLUSA")
     const categoryFiltered = products.filter((product) =>
-      product.categories.includes(category)
+      product.categories.some((cat) =>
+        cat.toLowerCase().includes(category.toLowerCase())
+      )
     );
   
     // Log dos produtos filtrados por categoria
@@ -104,7 +106,9 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
       Object.values(product.productClusters).some((value) =>
         value.toLowerCase().includes(cluster.toLowerCase())
       ) &&
-      !product.categories.includes(category) // Só entra aqui se não estiver na categoria
+      !product.categories.some((cat) =>
+        cat.toLowerCase().includes(category.toLowerCase())
+      ) // Só entra aqui se não estiver na categoria
     );
   
     // Log dos produtos filtrados por cluster

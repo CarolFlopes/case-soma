@@ -85,3 +85,11 @@ export const LoadMoreButton = styled.button`
     background-color: #444;
   }
 `;
+
+export const NoProductsMessage = styled.p`
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;

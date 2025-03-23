@@ -10,6 +10,37 @@ interface CategorySectionProps {
   hasDivider?: boolean;
 }
 
+const categoryRoutes = {
+  'VESTIDO': '/vestido',
+  'TOP/BLUSA': '/top&blusa',
+  'CALÇA': '/calca',
+  'CAMISA': '/camisa',
+  'JAQUETA': '/jaqueta',
+  'MACACÃO': '/macacao',
+  'SAIA': '/saia',
+  'SHORT': '/short',
+  'BLAZER': '/blazer',
+  'COLETE': '/colete',
+  'VER TUDO >': '/tudo',
+  'COURO': '/couro',
+  'SEDA': '/seda',
+  'TRICOT': '/tricot',
+  'CLUB/NOITE': '/club-noite',
+  'JEANS': '/jeans',
+  'MALHA': '/malha',
+  'ALFAIATARIA': '/alfaiataria',
+  'BOLSAS': '/bolsas',
+  'CALÇADOS': '/calcados',
+  'CINTO': '/cinto',
+  'COLAR': '/colar',
+  'ANEL': '/anel',
+  'BRINCO': '/brinco',
+  'PILSEIRA/BRACELETE': '/pulseira-bracelete',
+  'ECHARPE/LENÇO': '/echarpe-lenco',
+  'LINGERIE': '/lingerie',
+  'UNDERWEAR': '/underwear',
+};
+
 const CategorySection = ({
   title,
   data,
@@ -19,10 +50,11 @@ const CategorySection = ({
   const navigate = useNavigate();
 
   const handleItemClick = (item: string) => {
-    if (item === 'COURO') {
-      navigate('/couro'); 
+    const route = categoryRoutes[item as keyof typeof categoryRoutes]; // Obtém a rota correspondente ao item
+    if (route) {
+      navigate(route); // Navega para a rota
     }
-    onClose();
+    onClose(); // Fecha o dropdown
   };
 
   return (
