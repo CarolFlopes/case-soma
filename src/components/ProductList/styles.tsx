@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 0; // Removido o padding lateral
 `;
 
 export const Options = styled.div`
@@ -23,33 +24,26 @@ export const Options = styled.div`
 
 export const Grid = styled.div<{ itemsPerRow: number }>`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  width: 100%;
-  max-width: 1200px;
-  padding: 20px;
-
-  & > div {
-    display: grid;
-    grid-template-columns: repeat(${(props) => props.itemsPerRow}, 1fr);
-    gap: 10px;
-  }
+  grid-template-columns: repeat(${(props) => props.itemsPerRow}, 1fr);
+  gap: 0; // Remove o espaçamento entre as colunas
+  width: 100%; // Ocupa 100% da largura disponível
 `;
 
 export const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 8px;
   background: #fff;
+  width: 100%; // Ocupa 100% da largura do Grid
 `;
 
 export const Image = styled.img`
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  height: 720px; // Defina uma altura fixa ou use aspect-ratio
+  object-fit: cover; // Corta a imagem para cobrir o container
+  object-position: top; // Prioriza o topo da imagem ao cortar
+  display: block;
 `;
 
 export const Title = styled.h3`
@@ -58,10 +52,22 @@ export const Title = styled.h3`
   margin: 10px 0;
 `;
 
+export const PriceContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+`;
+
 export const Price = styled.p`
   font-size: 18px;
   font-weight: bold;
   color: #333;
+`;
+
+export const Installments = styled.p`
+  font-size: 14px;
+  color: #666;
 `;
 
 export const LoadMoreButton = styled.button`
