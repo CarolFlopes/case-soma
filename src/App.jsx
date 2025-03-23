@@ -3,6 +3,8 @@ import HomePage from "./views/Home";
 import GlobalStyle from "./styles/globalComponents";
 import CouroPage from "./views/Couro";
 
+
+
 function App() {
   return (
     <Router>
