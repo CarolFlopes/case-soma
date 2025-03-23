@@ -53,3 +53,41 @@ export const Item = styled.div`
     }
   }
 `;
+
+export const SizeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 40px; /* Espaçamento entre a seção de CATEGORIAS e TAMANHO */
+  height: 206px;
+`;
+
+export const SizeGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+`;
+
+export const SizeRow = styled.div`
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+`;
+
+export const SizeBox = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${colors.gray[200]};
+  cursor: pointer;
+  font-size: 14px;
+  color: ${colors.black};
+  &:hover {
+    background-color: ${colors.gray[100]};
+  }
+`;

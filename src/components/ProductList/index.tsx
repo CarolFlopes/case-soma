@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useProductsStore } from '../../hooks/useProductStore';
 import * as S from './styles';
 import Typography from '../Typography';
+import Dropdown from '../Dropdown';
+import useDropdown from '../../hooks/useDropdown';
 
 interface ProductListProps {
   category: string;
@@ -16,8 +18,18 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
     fetchProducts,
     filterByCategoryAndCluster,
   } = useProductsStore();
+
+  const {
+      dropdownOpen,
+      activeProduct,
+      dropdownRef,
+      setDropdownOpen,
+    } = useDropdown();
+  
   const [visibleRows, setVisibleRows] = useState(3);
   const [itemsPerRow, setItemsPerRow] = useState(2);
+  const [isFilterSize, setIsFilterSize] = useState(false);
+  const [isFilterOrder, setIsFilterOrder] = useState(false);
 
   // Carrega os produtos ao montar o componente
   useEffect(() => {
@@ -51,19 +63,19 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
 
           {/* Meio: Filtros */}
           <S.FilterContainer>
-            <S.FilterOption style={{marginRight: '60px'}}>
-              <Typography size={'15px'}>FILTRAR POR</Typography> <S.ArrowDownIcon />
+            <S.FilterOption style={{ marginRight: '60px' }}>
+              <Typography size={'15px'}>FILTRAR POR</Typography>{' '}
+              <S.ArrowDownIcon />
             </S.FilterOption>
             <S.FilterOption>
-              <Typography size={'15px'}>ORDENAR POR</Typography> <S.ArrowDownIcon />
+              <Typography size={'15px'}>ORDENAR POR</Typography>{' '}
+              <S.ArrowDownIcon />
             </S.FilterOption>
           </S.FilterContainer>
 
           {/* Canto direito: Alternar entre 2 e 4 itens por fileira */}
           <S.ItemsPerRowContainer>
-            <Typography>
-              Visualizar:
-            </Typography>
+            <Typography>Visualizar:</Typography>
             <S.ItemsPerRowButton
               active={itemsPerRow === 2}
               onClick={() => setItemsPerRow(2)}
@@ -105,6 +117,22 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
           </S.LoadMoreButton>
         )}
       </S.Container>
+      {isFilterSize && 
+        <Dropdown
+        ref={dropdownRef}
+        isOpen={dropdownOpen}
+        onClose={() => setDropdownOpen(false)}
+        activeProduct={activeProduct}
+        isFilterSize={isFilterSize}
+      />}
+      {isFilterOrder && 
+        <Dropdown
+        ref={dropdownRef}
+        isOpen={dropdownOpen}
+        onClose={() => setDropdownOpen(false)}
+        activeProduct={activeProduct}
+        isFilterOrder={isFilterOrder}
+      />}            
     </>
   );
 };

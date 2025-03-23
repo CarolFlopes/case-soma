@@ -36,6 +36,13 @@ export const FilterOption = styled.div`
   cursor: pointer;
   font-size: 14px;
   gap:10px;
+  &:hover{
+    cursor: pointer;
+    p{
+      font-weight: bold;
+    }
+    border-bottom: 1px solid {colors.black[300]};
+  }
 `;
 
 export const ArrowDownIcon = styled.span`
