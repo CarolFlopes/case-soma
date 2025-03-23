@@ -8,6 +8,58 @@ export const Container = styled.div`
   padding: 0; // Removido o padding lateral
 `;
 
+export const DisplayOptionsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 41px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+`;
+
+export const CategoryText = styled.span`
+  font-size: 14px;
+  font-weight: bold;
+`;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+export const FilterOption = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  gap:10px;
+`;
+
+export const ArrowDownIcon = styled.span`
+  border: solid black;
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+`;
+
+export const ItemsPerRowContainer = styled.div`
+  display: flex;
+  gap: 23px;
+`;
+
+export const ItemsPerRowButton = styled.button<{ active: boolean }>`
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: ${({ active }) => (active ? "bold" : "normal")};
+  color: ${({ active }) => (active ? "#000" : "#888")};
+`;
+
 export const Options = styled.div`
   margin-bottom: 16px;
   display: flex;
