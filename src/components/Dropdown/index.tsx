@@ -141,28 +141,30 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
               </S.SizeContainer>
             </>
           ) : isFilterOrder ? (
-            <S.OrderContainer>            
-  <S.OptionsRow>  {/* Adicionei um container para as opções */}
-    {sortOptions
-      .filter(
-        (option): option is { label: string; value: 'asc' | 'desc' } =>
-          option.value === 'asc' || option.value === 'desc'
-      )
-      .map(({ label, value }) => (
-        <S.OrderContent
-          key={value}
-          onClick={() => {
-            sortByPrice(value);
-            onClose();
-          }}
-        >
-          <Typography size={'11px'} color={colors.black[300]}>
-            {label}
-          </Typography>
-        </S.OrderContent>
-      ))}
-  </S.OptionsRow>
-</S.OrderContainer>
+            <S.OrderContainer>
+              <S.OptionsRow>
+                {sortOptions
+                  .filter(
+                    (
+                      option
+                    ): option is { label: string; value: 'asc' | 'desc' } =>
+                      option.value === 'asc' || option.value === 'desc'
+                  )
+                  .map(({ label, value }) => (
+                    <S.OrderContent
+                      key={value}
+                      onClick={() => {
+                        sortByPrice(value);
+                        onClose();
+                      }}
+                    >
+                      <Typography size={'11px'} color={colors.black[300]}>
+                        {label}
+                      </Typography>
+                    </S.OrderContent>
+                  ))}
+              </S.OptionsRow>
+            </S.OrderContainer>
           ) : (
             <CategorySection
               title="CATEGORIAS"
