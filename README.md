@@ -72,3 +72,8 @@ Crie sua branch (git checkout -b feature/nova-funcionalidade)
 Commit suas mudanças (git commit -m 'Adiciona nova funcionalidade')
 Push para a branch (git push origin feature/nova-funcionalidade)
 Abra um Pull Request
+
+## Comentarios
+
+Apenas o filtro por Coleção esta funcional
+Foram feitas peginas apenas para a parte de categorias

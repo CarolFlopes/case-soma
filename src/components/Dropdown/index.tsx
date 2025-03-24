@@ -12,6 +12,8 @@ interface DropdownProps {
   isFilter?: boolean;
   isFilterSize?: boolean;
   isFilterOrder?: boolean;
+  currentCategory?: string;
+  currentCluster?: string;
 }
 
 type SortOption = {
@@ -63,6 +65,8 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
       isFilter = false,
       isFilterSize = false,
       isFilterOrder = false,
+      currentCategory,
+      currentCluster,
     },
     ref
   ) => {
@@ -101,79 +105,71 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         )}
 
         {/* Filter Sections */}
-
-        <>
-          {isFilterSize ? (
-            <>
-              <CategorySection
-                title="CATEGORIAS"
-                data={categories.categorias}
-                onClose={onClose}
-                hasDivider
-              />
-              <S.SizeContainer>
-                <Typography
-                  size={'12px'}
-                  fontWeight={'700'}
-                  color={colors.black[300]}
-                >
-                  TAMANHOS
-                </Typography>
-                <S.SizeGridContainer>
-                  {sizes.map((row, rowIndex) => (
-                    <S.SizeRow key={rowIndex}>
-                      {row.map((size) => (
-                        <S.SizeBox
-                          key={size}
-                          onClick={() => {
-                            filterByCategoryAndCluster('', '', size);
-                            onClose();
-                          }}
-                        >
-                          <Typography size={'11px'} color={colors.black[300]}>
-                            {size}
-                          </Typography>
-                        </S.SizeBox>
-                      ))}
-                    </S.SizeRow>
-                  ))}
-                </S.SizeGridContainer>
-              </S.SizeContainer>
-            </>
-          ) : isFilterOrder ? (
-            <S.OrderContainer>
-              <S.OptionsRow>
-                {sortOptions
-                  .filter(
-                    (
-                      option
-                    ): option is { label: string; value: 'asc' | 'desc' } =>
-                      option.value === 'asc' || option.value === 'desc'
-                  )
-                  .map(({ label, value }) => (
-                    <S.OrderContent
-                      key={value}
-                      onClick={() => {
-                        sortByPrice(value);
-                        onClose();
-                      }}
-                    >
-                      <Typography size={'11px'} color={colors.black[300]}>
-                        {label}
-                      </Typography>
-                    </S.OrderContent>
-                  ))}
-              </S.OptionsRow>
-            </S.OrderContainer>
-          ) : (
+        {isFilterSize && (
+          <>
             <CategorySection
               title="CATEGORIAS"
               data={categories.categorias}
               onClose={onClose}
               hasDivider
             />
-          )}
-        </>
+            <S.SizeContainer>
+              <Typography
+                size={'12px'}
+                fontWeight={'700'}
+                color={colors.black[300]}
+              >
+                TAMANHOS
+              </Typography>
+              <S.SizeGridContainer>
+                {sizes.map((row, rowIndex) => (
+                  <S.SizeRow key={rowIndex}>
+                    {row.map((size) => (
+                      <S.SizeBox
+                        key={size}
+                        onClick={() => {
+                          filterByCategoryAndCluster(currentCategory || '', currentCluster || '', size);
+                          onClose();
+                        }}
+                      >
+                        <Typography size={'11px'} color={colors.black[300]}>
+                          {size}
+                        </Typography>
+                      </S.SizeBox>
+                    ))}
+                  </S.SizeRow>
+                ))}
+              </S.SizeGridContainer>
+            </S.SizeContainer>
+          </>
+        )}
+
+        {isFilterOrder && (
+          <S.OrderContainer>
+            <S.OptionsRow>
+              {sortOptions
+                .filter(
+                  (
+                    option
+                  ): option is { label: string; value: 'asc' | 'desc' } =>
+                    option.value === 'asc' || option.value === 'desc'
+                )
+                .map(({ label, value }) => (
+                  <S.OrderContent
+                    key={value}
+                    onClick={() => {
+                      sortByPrice(value);
+                      onClose();
+                    }}
+                  >
+                    <Typography size={'11px'} color={colors.black[300]}>
+                      {label}
+                    </Typography>
+                  </S.OrderContent>
+                ))}
+            </S.OptionsRow>
+          </S.OrderContainer>
+        )}
       </S.DropdownMenu>
     );
   }
