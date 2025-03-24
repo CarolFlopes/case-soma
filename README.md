@@ -76,4 +76,4 @@ Abra um Pull Request
 ## Comentarios
 
 Apenas o filtro por Coleção esta funcional
-Foram feitas peginas apenas para a parte de categorias
+Foram feitas paginas apenas para a parte de categorias
