@@ -3,26 +3,39 @@ import * as S from './styles';
 import CategorySection from './cateorySection';
 import Typography from '../Typography';
 import { colors } from '../../styles/designSystem';
+import { useProductsStore } from '../../hooks/useProductStore';
 
 interface DropdownProps {
   isOpen: boolean;
   onClose: () => void;
   activeProduct: string | null;
-  isFilter?: boolean; // Modo de filtro geral
-  isFilterSize?: boolean; // Exibe a seção de TAMANHO
-  isFilterOrder?: boolean; // Exibe a seção de ORDEM
+  isFilter?: boolean;
+  isFilterSize?: boolean;
+  isFilterOrder?: boolean;
 }
+
+type SortOption = {
+  label: string;
+  value: 'asc' | 'desc' | 'novidades' | 'mais_vistos';
+};
 
 export const categories = {
   categorias: {
-    produtos1: ['VESTIDO', 'TOP/BLUSA', 'CALÇA', 'CAMISA', 'JAQUETA', 'MACACÃO'],
+    produtos1: [
+      'VESTIDO',
+      'TOP/BLUSA',
+      'CALÇA',
+      'CAMISA',
+      'JAQUETA',
+      'MACACÃO',
+    ],
     produtos2: ['SAIA', 'SHORT', 'BLAZER', 'COLETE', 'VER TUDO >'],
     tecidos1: ['COURO', 'SEDA', 'TRICOT', 'CLUB/NOITE', 'JEANS', 'MALHA'],
     tecidos2: ['ALFAIATARIA', 'VER TUDO >'],
   },
   acessorios: {
     acessorios1: ['BOLSAS', 'CALÇADOS', 'CINTO', 'COLAR', 'ANEL', 'BRINCO'],
-    acessorios2: ['PILSEIRA/BRACELETE', 'ECHARPE/LENÇO', 'VER TUDO >'],
+    acessorios2: ['PULSEIRA/BRACELETE', 'ECHARPE/LENÇO', 'VER TUDO >'],
   },
   intimates: {
     intimates: ['LINGERIE', 'UNDERWEAR', 'VER TUDO >'],
@@ -34,20 +47,39 @@ const sizes = [
   ['44', 'PP', 'P', 'M', 'G'],
 ];
 
-const orders = [
-  'NOVIDADES',
-  'MAIS VISTOS',
-  'MENOR PREÇO',
-  'MAIOR PREÇO',
+const sortOptions: SortOption[] = [
+  { label: 'NOVIDADES', value: 'novidades' },
+  { label: 'MAIS VISTOS', value: 'mais_vistos' },
+  { label: 'MENOR PREÇO', value: 'asc' },
+  { label: 'MAIOR PREÇO', value: 'desc' },
 ];
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
-  ({ isOpen, onClose, activeProduct, isFilter = false, isFilterSize = false, isFilterOrder = false }, ref) => {
-    if (!isOpen || !activeProduct) return null;
+  (
+    {
+      isOpen,
+      onClose,
+      activeProduct,
+      isFilter = false,
+      isFilterSize = false,
+      isFilterOrder = false,
+    },
+    ref
+  ) => {
+    const { filterByCategoryAndCluster, sortByPrice } = useProductsStore();
+
+    if (!isOpen) return null;
+
+    const dropdownType = isFilterSize
+      ? 'size'
+      : isFilterOrder
+      ? 'order'
+      : 'default';
 
     return (
-      <S.DropdownMenu ref={ref}>
-        {!isFilter && (
+      <S.DropdownMenu ref={ref} $variant={dropdownType}>
+        {/* Category Section - Exibido apenas se não for filtro */}
+        {!isFilter && activeProduct && (
           <>
             <CategorySection
               title="CATEGORIAS"
@@ -68,75 +100,78 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
           </>
         )}
 
-        {isFilter && (
-          <>
-            <CategorySection
-              title="CATEGORIAS"
-              data={categories.categorias}
-              onClose={onClose}
-              hasDivider
-            />
+        {/* Filter Sections */}
 
-            {isFilterSize && (
+        <>
+          {isFilterSize ? (
+            <>
+              <CategorySection
+                title="CATEGORIAS"
+                data={categories.categorias}
+                onClose={onClose}
+                hasDivider
+              />
               <S.SizeContainer>
                 <Typography
                   size={'12px'}
                   fontWeight={'700'}
                   color={colors.black[300]}
-                  onClick={onClose}
                 >
                   TAMANHOS
                 </Typography>
-                <S.SizeGrid>
+                <S.SizeGridContainer>
                   {sizes.map((row, rowIndex) => (
                     <S.SizeRow key={rowIndex}>
-                      {row.map((size, sizeIndex) => (
-                        <S.SizeBox key={sizeIndex}>
-                          <Typography
-                            size={'11px'}
-                            color={colors.black[300]}
-                            onClick={onClose}
-                          >
+                      {row.map((size) => (
+                        <S.SizeBox
+                          key={size}
+                          onClick={() => {
+                            filterByCategoryAndCluster('', '', size);
+                            onClose();
+                          }}
+                        >
+                          <Typography size={'11px'} color={colors.black[300]}>
                             {size}
                           </Typography>
                         </S.SizeBox>
                       ))}
                     </S.SizeRow>
                   ))}
-                </S.SizeGrid>
+                </S.SizeGridContainer>
               </S.SizeContainer>
-            )}
-
-            {/* Exibe a seção de ORDEM se isFilterOrder for true */}
-            {isFilterOrder && (
-              <S.SizeContainer>
-                <Typography
-                  size={'12px'}
-                  fontWeight={'700'}
-                  color={colors.black[300]}
-                  onClick={onClose}
-                >
-                  ORDEM
-                </Typography>
-                <S.SizeGrid>
-                  {orders.map((order, index) => (
-                    <S.SizeRow key={index}>
-                      <S.SizeBox>
-                        <Typography
-                          size={'11px'}
-                          color={colors.black[300]}
-                          onClick={onClose}
-                        >
-                          {order}
-                        </Typography>
-                      </S.SizeBox>
-                    </S.SizeRow>
-                  ))}
-                </S.SizeGrid>
-              </S.SizeContainer>
-            )}
-          </>
-        )}
+            </>
+          ) : isFilterOrder ? (
+            <S.OrderContainer>            
+  <S.OptionsRow>  {/* Adicionei um container para as opções */}
+    {sortOptions
+      .filter(
+        (option): option is { label: string; value: 'asc' | 'desc' } =>
+          option.value === 'asc' || option.value === 'desc'
+      )
+      .map(({ label, value }) => (
+        <S.OrderContent
+          key={value}
+          onClick={() => {
+            sortByPrice(value);
+            onClose();
+          }}
+        >
+          <Typography size={'11px'} color={colors.black[300]}>
+            {label}
+          </Typography>
+        </S.OrderContent>
+      ))}
+  </S.OptionsRow>
+</S.OrderContainer>
+          ) : (
+            <CategorySection
+              title="CATEGORIAS"
+              data={categories.categorias}
+              onClose={onClose}
+              hasDivider
+            />
+          )}
+        </>
       </S.DropdownMenu>
     );
   }

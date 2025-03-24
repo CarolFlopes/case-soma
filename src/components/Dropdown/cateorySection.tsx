@@ -25,7 +25,7 @@ const categoryRoutes = {
   'COURO': '/couro',
   'SEDA': '/seda',
   'TRICOT': '/tricot',
-  'CLUB/NOITE': '/club-noite',
+  'CLUB/NOITE': '/club&noite',
   'JEANS': '/jeans',
   'MALHA': '/malha',
   'ALFAIATARIA': '/alfaiataria',

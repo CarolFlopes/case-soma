@@ -17,31 +17,37 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
     error,
     fetchProducts,
     filterByCategoryAndCluster,
+    sortByPrice,
   } = useProductsStore();
 
-  const {
-      dropdownOpen,
-      activeProduct,
-      dropdownRef,
-      setDropdownOpen,
-    } = useDropdown();
-  
+  const { dropdownOpen, activeProduct, dropdownRef, setDropdownOpen } = useDropdown();
+
   const [visibleRows, setVisibleRows] = useState(3);
   const [itemsPerRow, setItemsPerRow] = useState(2);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [isFilterSize, setIsFilterSize] = useState(false);
   const [isFilterOrder, setIsFilterOrder] = useState(false);
 
-  // Carrega os produtos ao montar o componente
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Filtra os produtos sempre que a categoria ou o cluster mudarem
   useEffect(() => {
-    filterByCategoryAndCluster(category, cluster);
-  }, [category, cluster, filterByCategoryAndCluster]);
+    filterByCategoryAndCluster(category, cluster, selectedSize || undefined);
+  }, [category, cluster, selectedSize, filterByCategoryAndCluster]);
 
-  // Calcula os produtos visíveis com base no número de linhas e colunas
+  const handleFilterSizeClick = () => {
+    setIsFilterSize(true); // Ativa o dropdown de tamanhos
+    setIsFilterOrder(false); // Desativa o dropdown de ordenação
+    setDropdownOpen(true); // Abre o dropdown
+  };
+
+  const handleFilterOrderClick = () => {
+    setIsFilterOrder(true);
+    setIsFilterSize(false);
+    setDropdownOpen(true);
+  };
+
   const visibleProducts = filteredProducts.slice(0, visibleRows * itemsPerRow);
 
   if (loading) return <div>Carregando...</div>;
@@ -50,9 +56,7 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
   return (
     <>
       <S.Container>
-        {/* Novo container de exibição */}
         <S.DisplayOptionsContainer>
-          {/* Canto esquerdo: Categoria selecionada */}
           <S.CategoryText>
             <Typography size={'15px'}>
               Coleção &gt;{' '}
@@ -61,19 +65,17 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
             </Typography>
           </S.CategoryText>
 
-          {/* Meio: Filtros */}
           <S.FilterContainer>
-            <S.FilterOption style={{ marginRight: '60px' }}>
-              <Typography size={'15px'}>FILTRAR POR</Typography>{' '}
+            <S.FilterOption onClick={handleFilterSizeClick}>
+              <Typography size={'15px'}>FILTRAR POR</Typography>
               <S.ArrowDownIcon />
             </S.FilterOption>
-            <S.FilterOption>
-              <Typography size={'15px'}>ORDENAR POR</Typography>{' '}
+            <S.FilterOption onClick={handleFilterOrderClick}>
+              <Typography size={'15px'}>ORDENAR POR</Typography>
               <S.ArrowDownIcon />
             </S.FilterOption>
           </S.FilterContainer>
 
-          {/* Canto direito: Alternar entre 2 e 4 itens por fileira */}
           <S.ItemsPerRowContainer>
             <Typography>Visualizar:</Typography>
             <S.ItemsPerRowButton
@@ -91,7 +93,6 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
           </S.ItemsPerRowContainer>
         </S.DisplayOptionsContainer>
 
-        {/* Grid de produtos */}
         <S.Grid itemsPerRow={itemsPerRow}>
           {visibleProducts.map((product, index) => (
             <S.ProductCard key={index}>
@@ -110,29 +111,38 @@ const ProductList: React.FC<ProductListProps> = ({ category, cluster }) => {
           ))}
         </S.Grid>
 
-        {/* Botão "Carregar mais" */}
         {visibleProducts.length < filteredProducts.length && (
           <S.LoadMoreButton onClick={() => setVisibleRows((prev) => prev + 3)}>
             Carregar mais
           </S.LoadMoreButton>
         )}
       </S.Container>
-      {isFilterSize && 
+
+      {isFilterSize && (
         <Dropdown
-        ref={dropdownRef}
-        isOpen={dropdownOpen}
-        onClose={() => setDropdownOpen(false)}
-        activeProduct={activeProduct}
-        isFilterSize={isFilterSize}
-      />}
-      {isFilterOrder && 
+          ref={dropdownRef}
+          isOpen={dropdownOpen}
+          onClose={() => {
+            setIsFilterSize(false);
+            setDropdownOpen(false);
+          }}
+          activeProduct={null} // Não precisamos de activeProduct para filtros
+          isFilterSize
+        />
+      )}
+
+      {isFilterOrder && (
         <Dropdown
-        ref={dropdownRef}
-        isOpen={dropdownOpen}
-        onClose={() => setDropdownOpen(false)}
-        activeProduct={activeProduct}
-        isFilterOrder={isFilterOrder}
-      />}            
+          ref={dropdownRef}
+          isOpen={dropdownOpen}
+          onClose={() => {
+            setIsFilterOrder(false);
+            setDropdownOpen(false);
+          }}
+          activeProduct={null}
+          isFilterOrder
+        />
+      )}
     </>
   );
 };

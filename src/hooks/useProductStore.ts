@@ -25,7 +25,8 @@ interface ProductsState {
   loading: boolean;
   error: string | null;
   fetchProducts: () => Promise<void>;
-  filterByCategoryAndCluster: (category: string, cluster: string) => void;
+  filterByCategoryAndCluster: (category: string, cluster: string, size?: string) => void;
+  sortByPrice: (order: "asc" | "desc") => void;
 }
 
 export const useProductsStore = create<ProductsState>((set, get) => ({
@@ -38,11 +39,6 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      console.log('Iniciando fetchProducts...'); // Log inicial
-
-      // Log dos dados brutos do JSON
-      console.log('Dados brutos do JSON:', productsData);
-
       const processedData: Product[] = (productsData as unknown as Product[]).map((product: any) => {
         const items = product.items || [];
         const sellers = items.flatMap((item: any) => item.sellers || []);
@@ -55,78 +51,49 @@ export const useProductsStore = create<ProductsState>((set, get) => ({
           categories: product.categories || [],
           SALE: product.SALE || [],
           Tamanho: items.flatMap((item: any) => item.Tamanho || []),
-          images: items.flatMap((item: any) =>
-            item.images?.map((img: any) => img.imageUrl) || []
-          ),
+          images: items.flatMap((item: any) => item.images?.map((img: any) => img.imageUrl) || []),
           Installments: commertialOffers.flatMap((offer: any) => offer.Installments || []),
           Price: commertialOffers[0]?.Price || 0,
         };
       });
 
-      // Log dos produtos processados
-      console.log('Produtos processados:', processedData);
-
       set({ products: processedData, filteredProducts: processedData, loading: false });
-
-      // Log do estado após o fetch
-      console.log('Estado após fetchProducts:', {
-        products: processedData,
-        filteredProducts: processedData,
-        loading: false,
-        error: null,
-      });
     } catch (error: any) {
       console.error('Erro ao buscar produtos:', error);
       set({ error: error.message || 'Failed to fetch products', loading: false });
     }
   },
 
-  filterByCategoryAndCluster: (category: string, cluster: string) => {
-    console.log('Iniciando filterByCategoryAndCluster...'); // Log inicial
-    console.log('Categoria recebida:', category);
-    console.log('Cluster recebido:', cluster);
-  
+  filterByCategoryAndCluster: (category: string, cluster: string, size?: string) => {
     const { products } = get();
-  
-    // Log dos produtos antes de filtrar
-    console.log('Produtos antes de filtrar:', products);
-  
-    // Filtro pela categoria (verifica se a categoria contém "TOP" ou "BLUSA")
+
     const categoryFiltered = products.filter((product) =>
-      product.categories.some((cat) =>
-        cat.toLowerCase().includes(category.toLowerCase())
-      )
+      product.categories.some((cat) => cat.toLowerCase().includes(category.toLowerCase()))
     );
-  
-    // Log dos produtos filtrados por categoria
-    console.log('Produtos filtrados por categoria:', categoryFiltered);
-  
-    // Filtro pelo cluster (verifica se o cluster contém a string desejada)
+
     const clusterFiltered = products.filter((product) =>
       Object.values(product.productClusters).some((value) =>
         value.toLowerCase().includes(cluster.toLowerCase())
       ) &&
-      !product.categories.some((cat) =>
-        cat.toLowerCase().includes(category.toLowerCase())
-      ) // Só entra aqui se não estiver na categoria
+      !product.categories.some((cat) => cat.toLowerCase().includes(category.toLowerCase()))
     );
-  
-    // Log dos produtos filtrados por cluster
-    console.log('Produtos filtrados por cluster:', clusterFiltered);
-  
-    // Combina os resultados e remove duplicatas
-    const combinedFiltered = Array.from(
-      new Set([...categoryFiltered, ...clusterFiltered])
-    );
-  
-    // Log dos produtos combinados e filtrados
-    console.log('Produtos combinados e filtrados:', combinedFiltered);
-  
+
+    let combinedFiltered = Array.from(new Set([...categoryFiltered, ...clusterFiltered]));
+
+    if (size) {
+      combinedFiltered = combinedFiltered.filter((product) =>
+        product.Tamanho.some((t) => t.includes(size))
+      );
+    }
+
     set({ filteredProducts: combinedFiltered });
-  
-    // Log do estado após o filtro
-    console.log('Estado após filterByCategoryAndCluster:', {
-      filteredProducts: combinedFiltered,
-    });
+  },
+
+  sortByPrice: (order: "asc" | "desc") => {
+    const { filteredProducts } = get();
+    const sortedProducts = [...filteredProducts].sort((a, b) => 
+      order === "asc" ? a.Price - b.Price : b.Price - a.Price
+    );
+    set({ filteredProducts: sortedProducts });
   },
 }));
