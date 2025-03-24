@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+Sobre o Projeto:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é uma vitrine de produtos onde os usuários podem visualizar, filtrar e adicionar itens ao carrinho. A aplicação segue o layout fornecido e implementa funcionalidades como:
 
-## Available Scripts
+Exibição de produtos a partir de um JSON mockado (done)
+Filtros dinâmicos para facilitar a busca (em andamento)
+Pagina com a possibilidade de carregar mais produtos "Carregar mais produtos" (done)
+Carrinho funcional (to be done)
 
-In the project directory, you can run:
+## Tecnologias
 
-### `npm start`
+React + TypeScript
+Styled Components para estilização
+Zustand para gerenciamento de estado (se aplicável)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Para rodar o projeto:
+Pre-requisitos:
+Node.js instalado (versão 18+ recomendada -> utilizei a v18.14.0)
+Gerenciador de pacotes npm ou yarn
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Clonar o repositório:
+git clone [https://github.com/CarolFlopes/case-soma.git]
+cd nome-do-projeto
 
-### `npm test`
+## Instalar dependencias:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+npm install
 
-### `npm run build`
+# ou
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+yarn install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Rodar o projeto:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+npm start
+estará disponivel em http://localhost:3000
 
-### `npm run eject`
+## Estrutura do Projeto:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+/src
+│── components/ # Componentes reutilizáveis
+│── views/ # Páginas da aplicação
+│── styles/ # Estilização global e temas
+│── data/ # Mock de dados (products.json)
+│── hooks/ # Hooks customizados (Zustand)
+│── App.tsx # Componente principal
+│── main.tsx # Entrada do React
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Funcionalidades
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Listagem de produtos dinâmica
+Botão "Carregar mais"
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Decisões Técnicas:
 
-## Learn More
+Componentização: Separação de componentes reutilizáveis para melhor manutenção.
+Gerenciamento de estado: (Zustand, useState dependendo da sua escolha).
+Styled Components: Utilizado para organização modular dos estilos.
+Performance: Implementação de botao para carregar mais itens para melhorar o carregamento inicial da pagina.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Próximos Passos
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Finalizar implementação do carrinho
+Completar sistema de filtros
+Adicionar testes unitários
+Implementar responsividade avançada
 
-### Code Splitting
+## Como Contribuir:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Faça um fork do repositório
+Crie sua branch (git checkout -b feature/nova-funcionalidade)
+Commit suas mudanças (git commit -m 'Adiciona nova funcionalidade')
+Push para a branch (git push origin feature/nova-funcionalidade)
+Abra um Pull Request
